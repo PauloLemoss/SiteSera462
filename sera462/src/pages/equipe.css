@@ -1,0 +1,108 @@
+
+.section-equipe{
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    margin-left: 100px;
+    margin-top: 20vh
+    
+ }
+ 
+ 
+ 
+ .information-equipe{
+    display: flex;
+ }
+ 
+ .description-people{
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
+     margin-top: 40px;
+ }
+ 
+ .title-position{
+     font-family: "Roboto Condensed", serif;
+     letter-spacing: 2px;
+     color: #ffffff;
+     font-weight: bold;
+
+ }
+ 
+ .name-developer{
+     font-family: 'Prata', serif;
+     letter-spacing: 4px;
+     font-size: 30px;
+     color: #fff;
+ }
+
+
+ 
+ .description-developer{
+     font-family: "Roboto Condensed", serif;
+ 
+     color: #ffffff;
+     font-weight: bold;
+     width: 100%;
+     max-width: 370px;
+     line-height: 25px;
+     
+  
+ }
+ 
+ .dot {
+     width: 10px;  
+     height: 10px;
+     background-color: gray; 
+     border-radius: 50%; 
+     border: none;
+     cursor: pointer;
+     margin: 5px; 
+   }
+   
+   .dot.active {
+     background-color: white; 
+   }
+ 
+ .image-people{
+  margin-left: 150px;
+ }
+
+.imagem-0{
+    width: 300px;
+}
+
+.imagem-1{
+    width: 300px;
+}
+
+.imagem-2{
+    width: 270px;
+    margin-top: -40px;
+}
+
+.imagem-3{
+    width: 350px;
+}
+
+.imagem-4{
+    width: 300px;
+}
+
+.imagem-5{
+    width: 300px;
+}
+
+.container-equipe {
+    width: 100%;
+    min-height: 100vh;
+    background: url('../images/back-ground-equipe.jpg') center/cover no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+
+
+  
