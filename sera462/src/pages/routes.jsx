@@ -4,6 +4,7 @@ import Home from "../components/Home";
 import Equipe from "./Equipe";
 import Contato from "./Contato";
 import Parceiros from "./Parceiros";
+import QuemSomos from "./QuemSomos";
 
 const AppRouter = () => (
   <Routes>
@@ -12,6 +13,7 @@ const AppRouter = () => (
       <Route path="/equipe" element={<Equipe />} />
       <Route path="/contato" element={<Contato />} />
       <Route path="/parceiros" element={<Parceiros />} />
+      <Route path="/quemsomos" element={<QuemSomos />} />
     </Route>
   </Routes>
 );
