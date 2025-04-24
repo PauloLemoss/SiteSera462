@@ -8,7 +8,7 @@ function Header() {
         <ul className="list-home">
           <li><Link to="/">HOME</Link></li>
           <li><Link to="/quemsomos">QUEM SOMOS</Link></li>
-          <li><Link to="/clientes">CLIENTES</Link></li>
+          <li className='clientes' ><Link to="/clientes">CLIENTES</Link></li>
           <li><Link to="/parceiros">PARCEIROS</Link></li>
           <li><Link to="/equipe">EQUIPE</Link></li>
           <li><Link to="/contato">CONTATO</Link></li>
