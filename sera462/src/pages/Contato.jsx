@@ -105,7 +105,7 @@ function Contato() {
                     </li>
                 </ul>
                 <p className="paragrafo-campo">* campos obrigatórios</p>
-                <button className="button" type="submit">Enviar</button>
+                <button className="button-enviar" type="submit">Enviar</button>
             </form>
         </div>
     );

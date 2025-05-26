@@ -105,4 +105,59 @@
 
 
 
+@media (max-width: 768px) {
+  .section-equipe {
+    margin: 0;
+    padding: 10px;
+  }
+
+  .information-equipe {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 70px;
+  }
+
+  .description-people {
+    margin: 0;
+    padding: 0 10px;
+  }
+
+  .image-people {
+    margin: 0;
+    width: auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .imagem-0, .imagem-1, .imagem-2, .imagem-3, .imagem-4, .imagem-5 {
+    width: 150px;
+    margin-top: 10px;
+  }
+
+
+
+  .title-position,
+  .name-developer,
+  .description-developer {
+    text-align: center;
+  }
+
+
+  .name-developer{
+    font-size: 15px;
+  }
+
+ .dots {
+  display: flex;
+  flex-direction: row;  
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  width: 100%; 
+}
+}
+
+
+
   
