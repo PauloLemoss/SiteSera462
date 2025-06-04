@@ -1,4 +1,4 @@
-import './parceiros.css'
+import '../styles/main.css'
 import imageEte from "../images/parceiros-bg.png"
 
 

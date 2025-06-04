@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './contato.css';
+import '../styles/main.css';
 
 function Contato() {
     const [valores, setValores] = useState({

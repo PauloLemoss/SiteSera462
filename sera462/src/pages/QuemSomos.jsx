@@ -1,5 +1,5 @@
 import React from "react";
-import "./quemsomos.css";
+import "../styles/main.css";
 
 function QuemSomos() {
   return (

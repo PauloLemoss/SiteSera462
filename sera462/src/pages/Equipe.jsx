@@ -1,4 +1,4 @@
-import './equipe.css';
+import '../styles/main.css';
 import { useState } from 'react';
 import paulo from '../images/paulo.png'
 import charles from '../images/charles.png'

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./areadeacesso.css"; // Reutilizando o mesmo CSS
+import "../styles/main.css";
 
 function CadastroAluno({ instituicoes = [], turmas = [] }) {
   const navigate = useNavigate();

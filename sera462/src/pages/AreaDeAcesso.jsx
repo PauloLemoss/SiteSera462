@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './areadeacesso.css';
+import '../styles/main.css';
 
 function AreaDeAcesso() {
     const navigate = useNavigate();

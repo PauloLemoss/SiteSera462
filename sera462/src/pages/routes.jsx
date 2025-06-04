@@ -9,6 +9,8 @@ import AreadeAcesso from "./AreaDeAcesso";
 import CadastroAluno from "./CadastroAluno";
 import CadastroTurma from "./CadastroTurma";
 import CadastroProfessor from "./CadastroProfessor";
+import Tenant from "./Tenant";
+import User from "./User";
 
 const AppRouter = () => (
   <Routes>
@@ -42,7 +44,7 @@ const AppRouter = () => (
         }
       />
 
-      {/* Cadastro de Professor (agora dentro do Layout) */}
+      {/* Cadastro de Professor */}
       <Route
         path="/cadastroprofessor"
         element={
@@ -50,6 +52,18 @@ const AppRouter = () => (
             instituicoes={[{ nome: "Instituição A" }, { nome: "Instituição B" }]}
           />
         }
+      />
+
+      {/* Cadastro de Tenant (Instituição) */}
+      <Route 
+        path="/tenant" 
+        element={<Tenant />} 
+      />
+
+      {/* Cadastro de Usuário */}
+      <Route 
+        path="/user" 
+        element={<User />} 
       />
     </Route>
   </Routes>
