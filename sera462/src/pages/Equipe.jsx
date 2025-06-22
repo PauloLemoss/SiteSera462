@@ -1,11 +1,11 @@
-import '../styles/main.css';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import paulo from '../images/paulo.png'
 import charles from '../images/charles.png'
 import arthur from '../images/Arthur.png'
 import charleu from '../images/charleu2.png'
 import izabel from '../images/izabel.png'
 import isael from '../images/isael.png'
+
 const membros = [
   {
     id: 0,
@@ -56,37 +56,118 @@ function Equipe() {
   const membro = membros[membroAtual];
 
   return (
-    <div className="container-equipe">
-      <section className="section-equipe">
-        <div className="information-equipe">
-          <div className="description-people">
-            <h2 className="title-position">{membro.cargo}</h2>
-            <h1 className="name-developer">{membro.nome}</h1>
-            <p className="description-developer">{membro.descricao}</p>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Hero Section */}
+      <section className="gradient-hero py-20">
+        <div className="container-custom">
+          <div className="text-center">
+            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+              Nossa Equipe
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Conheça os profissionais apaixonados por tecnologia e educação 
+              que fazem o Sera462 acontecer.
+            </p>
+          </div>
+        </div>
+      </section>
 
-            <div className="dots">
-              {membros.map((item, index) => (
-                <button
-                  key={item.id}
-                  className={`dot ${index === membroAtual ? 'active' : ''}`}
-                  onClick={() => setMembroAtual(index)}
-                />
-              ))}
+      {/* Team Member Section */}
+      <section className="section">
+        <div className="container-custom">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Member Information */}
+            <div className="space-y-6">
+              <div className="card p-8">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold text-primary mb-2">
+                    {membro.cargo}
+                  </h2>
+                  <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    {membro.nome}
+                  </h1>
+                  <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+                    {membro.descricao}
+                  </p>
+                </div>
+
+                {/* Navigation Dots */}
+                <div className="flex justify-center space-x-3">
+                  {membros.map((item, index) => (
+                    <button
+                      key={item.id}
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        index === membroAtual 
+                          ? 'bg-primary scale-125' 
+                          : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500'
+                      }`}
+                      onClick={() => setMembroAtual(index)}
+                      aria-label={`Ver ${item.nome}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Member Image */}
+            <div className="relative">
+              <div className="card p-8">
+                <div className="relative overflow-hidden rounded-2xl">
+                  <img
+                    className="w-full h-auto object-cover transition-transform duration-500 hover:scale-105"
+                    src={membro.imagem}
+                    alt={membro.nome}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="image-people">
-            <img
-              className={`image-equipe imagem-${membro.id}`}
-              src={membro.imagem}
-              alt={membro.nome}
-            />
+      {/* All Team Members Grid */}
+      <section className="section bg-white dark:bg-gray-800">
+        <div className="container-custom">
+          <div className="text-center mb-16">
+            <h2 className="section-title">
+              Conheça Toda a Equipe
+            </h2>
+            <p className="section-subtitle">
+              Profissionais especializados em diferentes áreas da tecnologia
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {membros.map((membro) => (
+              <div 
+                key={membro.id} 
+                className="card p-6 text-center hover:shadow-medium transition-all duration-300 cursor-pointer"
+                onClick={() => setMembroAtual(membro.id)}
+              >
+                <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden">
+                  <img
+                    className="w-full h-full object-cover"
+                    src={membro.imagem}
+                    alt={membro.nome}
+                  />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
+                  {membro.nome}
+                </h3>
+                <p className="text-primary font-medium mb-3">
+                  {membro.cargo}
+                </p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
+                  {membro.descricao}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
     </div>
   );
 }
-
 
 export default Equipe;

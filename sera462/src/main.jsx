@@ -1,13 +1,23 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import "./styles/main.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./index.css";
 import App from "./App.jsx";
+
+const router = createBrowserRouter([
+  {
+    path: "*",
+    element: <App />,
+  },
+], {
+  future: {
+    v7_startTransition: true,
+    v7_relativeSplatPath: true,
+  },
+});
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
