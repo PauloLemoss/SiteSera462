@@ -31,6 +31,7 @@ const adminNavigation = [
   { name: 'Cadastro Professor', href: '/cadastroprofessor', icon: UsersIcon },
   { name: 'Cadastro Instituição', href: '/tenant', icon: BuildingOfficeIcon },
   { name: 'Cadastro Usuário', href: '/user', icon: UserCircleIcon },
+  { name: 'Cadastro Matéria', href: '/mataria', icon: AcademicCapIcon },
 ];
 
 function classNames(...classes) {

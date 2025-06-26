@@ -93,10 +93,21 @@ const Home = () => {
                   Começar Agora
                   <ArrowRightIcon className="w-5 h-5 ml-2" />
                 </Link>
-                <button className="btn-outline text-lg px-8 py-3 flex items-center justify-center">
+                <Link
+                  to="/login"
+                  className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 text-lg flex items-center justify-center"
+                >
+                  Entrar
+                </Link>
+                <a
+                  href="https://drive.google.com/file/d/1Cbe3xD2-zsyQEp6nanM9N9-8SfhO_vQe/view?usp=drive_link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-outline text-lg px-8 py-3 flex items-center justify-center"
+                >
                   <PlayIcon className="w-5 h-5 mr-2" />
                   Ver Demo
-                </button>
+                </a>
               </div>
             </div>
             <div className="lg:w-1/2 lg:pl-12">
@@ -116,7 +127,7 @@ const Home = () => {
                         Sera462
                       </h3>
                       <p className="text-gray-600 dark:text-gray-400 mb-4">
-                        Plataforma de Gestão Educacional
+                        Plataforma de Gameficação Educacional
                       </p>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-4">

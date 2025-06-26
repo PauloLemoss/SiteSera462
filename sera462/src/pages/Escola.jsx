@@ -137,7 +137,7 @@ function Escola() {
       };
 
       const response = await fetch(
-        "http://appcad.vps5547.panel.icontainer.run:8080/int/v1/instituicoes",
+        "https://appcad.vps5547.panel.icontainer.run/int/v1/instituicoes",
         {
           method: "POST",
           headers: {

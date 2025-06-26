@@ -7,19 +7,13 @@ import {
 
 const User = () => {
   const [formData, setFormData] = useState({
-    nome: '',
+    cnpj: '',
     email: '',
-    cpf: '',
-    telefone: '',
-    dataNascimento: '',
-    endereco: '',
-    cidade: '',
-    estado: '',
-    cep: '',
-    cargo: '',
-    departamento: '',
-    senha: '',
-    confirmarSenha: ''
+    username: '',
+    name: '',
+    role: '',
+    password: '',
+    confirmPassword: ''
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,8 +39,10 @@ const User = () => {
   const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.nome.trim()) {
-      newErrors.nome = 'Nome completo é obrigatório';
+    if (!formData.cnpj.trim()) {
+      newErrors.cnpj = 'CNPJ é obrigatório';
+    } else if (!/^\d{14}$/.test(formData.cnpj.replace(/\D/g, ''))) {
+      newErrors.cnpj = 'CNPJ deve ter 14 dígitos';
     }
     
     if (!formData.email.trim()) {
@@ -55,56 +51,28 @@ const User = () => {
       newErrors.email = 'Email inválido';
     }
     
-    if (!formData.cpf.trim()) {
-      newErrors.cpf = 'CPF é obrigatório';
-    } else if (!/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(formData.cpf)) {
-      newErrors.cpf = 'CPF deve estar no formato XXX.XXX.XXX-XX';
+    if (!formData.username.trim()) {
+      newErrors.username = 'Nome de usuário é obrigatório';
     }
     
-    if (!formData.telefone.trim()) {
-      newErrors.telefone = 'Telefone é obrigatório';
+    if (!formData.name.trim()) {
+      newErrors.name = 'Nome é obrigatório';
     }
     
-    if (!formData.dataNascimento.trim()) {
-      newErrors.dataNascimento = 'Data de nascimento é obrigatória';
+    if (!formData.role.trim()) {
+      newErrors.role = 'Função é obrigatória';
     }
     
-    if (!formData.endereco.trim()) {
-      newErrors.endereco = 'Endereço é obrigatório';
+    if (!formData.password.trim()) {
+      newErrors.password = 'Senha é obrigatória';
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Senha deve ter pelo menos 6 caracteres';
     }
     
-    if (!formData.cidade.trim()) {
-      newErrors.cidade = 'Cidade é obrigatória';
-    }
-    
-    if (!formData.estado.trim()) {
-      newErrors.estado = 'Estado é obrigatório';
-    }
-    
-    if (!formData.cep.trim()) {
-      newErrors.cep = 'CEP é obrigatório';
-    } else if (!/^\d{5}-\d{3}$/.test(formData.cep)) {
-      newErrors.cep = 'CEP deve estar no formato XXXXX-XXX';
-    }
-    
-    if (!formData.cargo.trim()) {
-      newErrors.cargo = 'Cargo é obrigatório';
-    }
-    
-    if (!formData.departamento.trim()) {
-      newErrors.departamento = 'Departamento é obrigatório';
-    }
-    
-    if (!formData.senha.trim()) {
-      newErrors.senha = 'Senha é obrigatória';
-    } else if (formData.senha.length < 8) {
-      newErrors.senha = 'Senha deve ter pelo menos 8 caracteres';
-    }
-    
-    if (!formData.confirmarSenha.trim()) {
-      newErrors.confirmarSenha = 'Confirmação de senha é obrigatória';
-    } else if (formData.senha !== formData.confirmarSenha) {
-      newErrors.confirmarSenha = 'Senhas não coincidem';
+    if (!formData.confirmPassword.trim()) {
+      newErrors.confirmPassword = 'Confirmação de senha é obrigatória';
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'Senhas não coincidem';
     }
     
     setErrors(newErrors);
@@ -121,27 +89,31 @@ const User = () => {
     setIsSubmitting(true);
     
     try {
+      // Prepare data for API (remove confirmPassword as it's not needed in the API call)
+      const apiData = {
+        cnpj: formData.cnpj,
+        email: formData.email,
+        username: formData.username,
+        name: formData.name,
+        role: formData.role,
+        password: formData.password
+      };
+      
+      // Here you would typically send the data to your API
+      console.log('User form data for API:', apiData);
+      
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      // Here you would typically send the data to your API
-      console.log('User form data:', formData);
-      
       setIsSubmitted(true);
       setFormData({
-        nome: '',
+        cnpj: '',
         email: '',
-        cpf: '',
-        telefone: '',
-        dataNascimento: '',
-        endereco: '',
-        cidade: '',
-        estado: '',
-        cep: '',
-        cargo: '',
-        departamento: '',
-        senha: '',
-        confirmarSenha: ''
+        username: '',
+        name: '',
+        role: '',
+        password: '',
+        confirmPassword: ''
       });
     } catch (error) {
       console.error('Error submitting user form:', error);
@@ -201,26 +173,65 @@ const User = () => {
             </h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Personal Information */}
+              {/* CNPJ */}
+              <div>
+                <label htmlFor="cnpj" className="form-label">
+                  CNPJ *
+                </label>
+                <input
+                  type="text"
+                  id="cnpj"
+                  name="cnpj"
+                  value={formData.cnpj}
+                  onChange={handleChange}
+                  className={`form-input ${errors.cnpj ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
+                  placeholder="00000000000000"
+                />
+                {errors.cnpj && (
+                  <p className="form-error">{errors.cnpj}</p>
+                )}
+              </div>
+
+              {/* Basic Information */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="nome" className="form-label">
-                    Nome Completo *
+                  <label htmlFor="name" className="form-label">
+                    Nome *
                   </label>
                   <input
                     type="text"
-                    id="nome"
-                    name="nome"
-                    value={formData.nome}
+                    id="name"
+                    name="name"
+                    value={formData.name}
                     onChange={handleChange}
-                    className={`form-input ${errors.nome ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
-                    placeholder="Nome completo do usuário"
+                    className={`form-input ${errors.name ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
+                    placeholder="Nome do usuário"
                   />
-                  {errors.nome && (
-                    <p className="form-error">{errors.nome}</p>
+                  {errors.name && (
+                    <p className="form-error">{errors.name}</p>
                   )}
                 </div>
                 
+                <div>
+                  <label htmlFor="username" className="form-label">
+                    Nome de Usuário *
+                  </label>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    className={`form-input ${errors.username ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
+                    placeholder="nomeusuario"
+                  />
+                  {errors.username && (
+                    <p className="form-error">{errors.username}</p>
+                  )}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="email" className="form-label">
                     Email *
@@ -238,200 +249,26 @@ const User = () => {
                     <p className="form-error">{errors.email}</p>
                   )}
                 </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                  <label htmlFor="cpf" className="form-label">
-                    CPF *
-                  </label>
-                  <input
-                    type="text"
-                    id="cpf"
-                    name="cpf"
-                    value={formData.cpf}
-                    onChange={handleChange}
-                    className={`form-input ${errors.cpf ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
-                    placeholder="XXX.XXX.XXX-XX"
-                  />
-                  {errors.cpf && (
-                    <p className="form-error">{errors.cpf}</p>
-                  )}
-                </div>
                 
                 <div>
-                  <label htmlFor="telefone" className="form-label">
-                    Telefone *
-                  </label>
-                  <input
-                    type="tel"
-                    id="telefone"
-                    name="telefone"
-                    value={formData.telefone}
-                    onChange={handleChange}
-                    className={`form-input ${errors.telefone ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
-                    placeholder="(11) 99999-9999"
-                  />
-                  {errors.telefone && (
-                    <p className="form-error">{errors.telefone}</p>
-                  )}
-                </div>
-                
-                <div>
-                  <label htmlFor="dataNascimento" className="form-label">
-                    Data de Nascimento *
-                  </label>
-                  <input
-                    type="date"
-                    id="dataNascimento"
-                    name="dataNascimento"
-                    value={formData.dataNascimento}
-                    onChange={handleChange}
-                    className={`form-input ${errors.dataNascimento ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
-                  />
-                  {errors.dataNascimento && (
-                    <p className="form-error">{errors.dataNascimento}</p>
-                  )}
-                </div>
-              </div>
-
-              {/* Address Information */}
-              <div>
-                <label htmlFor="endereco" className="form-label">
-                  Endereço Completo *
-                </label>
-                <input
-                  type="text"
-                  id="endereco"
-                  name="endereco"
-                  value={formData.endereco}
-                  onChange={handleChange}
-                  className={`form-input ${errors.endereco ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
-                  placeholder="Rua, número, complemento"
-                />
-                {errors.endereco && (
-                  <p className="form-error">{errors.endereco}</p>
-                )}
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                  <label htmlFor="cidade" className="form-label">
-                    Cidade *
-                  </label>
-                  <input
-                    type="text"
-                    id="cidade"
-                    name="cidade"
-                    value={formData.cidade}
-                    onChange={handleChange}
-                    className={`form-input ${errors.cidade ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
-                    placeholder="Nome da cidade"
-                  />
-                  {errors.cidade && (
-                    <p className="form-error">{errors.cidade}</p>
-                  )}
-                </div>
-                
-                <div>
-                  <label htmlFor="estado" className="form-label">
-                    Estado *
+                  <label htmlFor="role" className="form-label">
+                    Função *
                   </label>
                   <select
-                    id="estado"
-                    name="estado"
-                    value={formData.estado}
+                    id="role"
+                    name="role"
+                    value={formData.role}
                     onChange={handleChange}
-                    className={`form-input ${errors.estado ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
+                    className={`form-input ${errors.role ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                   >
-                    <option value="">Selecione o estado</option>
-                    <option value="AC">Acre</option>
-                    <option value="AL">Alagoas</option>
-                    <option value="AP">Amapá</option>
-                    <option value="AM">Amazonas</option>
-                    <option value="BA">Bahia</option>
-                    <option value="CE">Ceará</option>
-                    <option value="DF">Distrito Federal</option>
-                    <option value="ES">Espírito Santo</option>
-                    <option value="GO">Goiás</option>
-                    <option value="MA">Maranhão</option>
-                    <option value="MT">Mato Grosso</option>
-                    <option value="MS">Mato Grosso do Sul</option>
-                    <option value="MG">Minas Gerais</option>
-                    <option value="PA">Pará</option>
-                    <option value="PB">Paraíba</option>
-                    <option value="PR">Paraná</option>
-                    <option value="PE">Pernambuco</option>
-                    <option value="PI">Piauí</option>
-                    <option value="RJ">Rio de Janeiro</option>
-                    <option value="RN">Rio Grande do Norte</option>
-                    <option value="RS">Rio Grande do Sul</option>
-                    <option value="RO">Rondônia</option>
-                    <option value="RR">Roraima</option>
-                    <option value="SC">Santa Catarina</option>
-                    <option value="SP">São Paulo</option>
-                    <option value="SE">Sergipe</option>
-                    <option value="TO">Tocantins</option>
+                    <option value="">Selecione a função</option>
+                    <option value="Professor">Professor</option>
+                    <option value="Estudante">Estudante</option>
+                    <option value="Instituição">Instituição</option>
+                    <option value="Admin">Admin</option>
                   </select>
-                  {errors.estado && (
-                    <p className="form-error">{errors.estado}</p>
-                  )}
-                </div>
-                
-                <div>
-                  <label htmlFor="cep" className="form-label">
-                    CEP *
-                  </label>
-                  <input
-                    type="text"
-                    id="cep"
-                    name="cep"
-                    value={formData.cep}
-                    onChange={handleChange}
-                    className={`form-input ${errors.cep ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
-                    placeholder="XXXXX-XXX"
-                  />
-                  {errors.cep && (
-                    <p className="form-error">{errors.cep}</p>
-                  )}
-                </div>
-              </div>
-
-              {/* Professional Information */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="cargo" className="form-label">
-                    Cargo *
-                  </label>
-                  <input
-                    type="text"
-                    id="cargo"
-                    name="cargo"
-                    value={formData.cargo}
-                    onChange={handleChange}
-                    className={`form-input ${errors.cargo ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
-                    placeholder="Professor, Coordenador, etc."
-                  />
-                  {errors.cargo && (
-                    <p className="form-error">{errors.cargo}</p>
-                  )}
-                </div>
-                
-                <div>
-                  <label htmlFor="departamento" className="form-label">
-                    Departamento *
-                  </label>
-                  <input
-                    type="text"
-                    id="departamento"
-                    name="departamento"
-                    value={formData.departamento}
-                    onChange={handleChange}
-                    className={`form-input ${errors.departamento ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
-                    placeholder="Administrativo, Pedagógico, etc."
-                  />
-                  {errors.departamento && (
-                    <p className="form-error">{errors.departamento}</p>
+                  {errors.role && (
+                    <p className="form-error">{errors.role}</p>
                   )}
                 </div>
               </div>
@@ -439,38 +276,38 @@ const User = () => {
               {/* Password Information */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="senha" className="form-label">
+                  <label htmlFor="password" className="form-label">
                     Senha *
                   </label>
                   <input
                     type="password"
-                    id="senha"
-                    name="senha"
-                    value={formData.senha}
+                    id="password"
+                    name="password"
+                    value={formData.password}
                     onChange={handleChange}
-                    className={`form-input ${errors.senha ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
-                    placeholder="Mínimo 8 caracteres"
+                    className={`form-input ${errors.password ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
+                    placeholder="Mínimo 6 caracteres"
                   />
-                  {errors.senha && (
-                    <p className="form-error">{errors.senha}</p>
+                  {errors.password && (
+                    <p className="form-error">{errors.password}</p>
                   )}
                 </div>
                 
                 <div>
-                  <label htmlFor="confirmarSenha" className="form-label">
+                  <label htmlFor="confirmPassword" className="form-label">
                     Confirmar Senha *
                   </label>
                   <input
                     type="password"
-                    id="confirmarSenha"
-                    name="confirmarSenha"
-                    value={formData.confirmarSenha}
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
                     onChange={handleChange}
-                    className={`form-input ${errors.confirmarSenha ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
+                    className={`form-input ${errors.confirmPassword ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                     placeholder="Confirme sua senha"
                   />
-                  {errors.confirmarSenha && (
-                    <p className="form-error">{errors.confirmarSenha}</p>
+                  {errors.confirmPassword && (
+                    <p className="form-error">{errors.confirmPassword}</p>
                   )}
                 </div>
               </div>

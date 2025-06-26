@@ -12,9 +12,14 @@ import Tenant from "./Tenant";
 import User from "./User";
 import Escola from "./Escola";
 import Turma from "./Turma";
+import Mataria from "./Mataria";
+import Login from "./Login";
 
 const AppRouter = () => (
   <Routes>
+    {/* Login route - outside Layout (no navigation menu) */}
+    <Route path="/login" element={<Login />} />
+    
     {/* Todas as rotas abaixo compartilham o Layout (com o menu) */}
     <Route element={<Layout />}>
       <Route path="/" element={<Home />} />
@@ -61,6 +66,12 @@ const AppRouter = () => (
       <Route 
         path="/user" 
         element={<User />} 
+      />
+
+      {/* Cadastro de Matéria */}
+      <Route 
+        path="/mataria" 
+        element={<Mataria />} 
       />
     </Route>
   </Routes>

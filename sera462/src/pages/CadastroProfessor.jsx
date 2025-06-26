@@ -28,7 +28,7 @@ function CadastroProfessor() {
     setIsLoading(true);
     try {
       const response = await fetch(
-        "http://appcad.vps5547.panel.icontainer.run:8080/int/v1/instituicoes/list",
+        "https://appcad.vps5547.panel.icontainer.run/int/v1/instituicoes/list",
         {
           method: "GET",
           headers: {
@@ -132,7 +132,7 @@ function CadastroProfessor() {
       };
 
       const response = await fetch(
-        "http://appcad.vps5547.panel.icontainer.run:8080/int/v1/professores",
+        "https://appcad.vps5547.panel.icontainer.run/int/v1/professores",
         {
           method: "POST",
           headers: {

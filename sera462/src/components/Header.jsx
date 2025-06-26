@@ -29,6 +29,7 @@ function Header() {
           <li><Link to="/areadeacesso" onClick={() => setMenuAtivo(false)}>ÁREA DE ACESSO</Link></li>
           <li><Link to="/tenant" onClick={() => setMenuAtivo(false)}>CADASTRO DE INSTITUIÇÃO</Link></li>
           <li><Link to="/user" onClick={() => setMenuAtivo(false)}>CADASTRO DE USUÁRIO</Link></li>
+          <li><Link to="/mataria" onClick={() => setMenuAtivo(false)}>CADASTRO DE MATÉRIA</Link></li>
           <li>
             <button className="login-button" onClick={() => setMenuAtivo(false)}>
               LOGIN
