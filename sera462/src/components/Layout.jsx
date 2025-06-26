@@ -27,7 +27,7 @@ const navigation = [
 const adminNavigation = [
   { name: 'Área de Acesso', href: '/areadeacesso', icon: UserCircleIcon },
   { name: 'Cadastro Aluno', href: '/cadastroaluno', icon: AcademicCapIcon },
-  { name: 'Cadastro Turma', href: '/cadastroturma', icon: UserGroupIcon },
+  { name: 'Cadastro Turma', href: '/turma', icon: UserGroupIcon },
   { name: 'Cadastro Professor', href: '/cadastroprofessor', icon: UsersIcon },
   { name: 'Cadastro Instituição', href: '/tenant', icon: BuildingOfficeIcon },
   { name: 'Cadastro Usuário', href: '/user', icon: UserCircleIcon },
@@ -214,7 +214,7 @@ const Layout = () => {
                 Sera462
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
-                Transformando a educação através da tecnologia e inovação.
+              Transformando o aprendizado em uma grande aventura!
               </p>
             </div>
             <div>

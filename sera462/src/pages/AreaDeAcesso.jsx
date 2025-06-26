@@ -334,19 +334,26 @@ function AreaDeAcesso() {
                     </div>
 
                     {/* Navigation Buttons */}
-                    <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <button
+                            className="btn-outline flex items-center justify-center py-3"
+                            onClick={() => navigate('/escola')}
+                        >
+                            Cadastro de Escola
+                            <ArrowRightIcon className="w-4 h-4 ml-2" />
+                        </button>
+                        <button
+                            className="btn-outline flex items-center justify-center py-3"
+                            onClick={() => navigate('/turma')}
+                        >
+                            Cadastro de Turma
+                            <ArrowRightIcon className="w-4 h-4 ml-2" />
+                        </button>
                         <button
                             className="btn-outline flex items-center justify-center py-3"
                             onClick={() => navigate('/cadastroaluno')}
                         >
                             Cadastro de Aluno
-                            <ArrowRightIcon className="w-4 h-4 ml-2" />
-                        </button>
-                        <button
-                            className="btn-outline flex items-center justify-center py-3"
-                            onClick={() => navigate('/cadastroturma')}
-                        >
-                            Cadastro de Turma
                             <ArrowRightIcon className="w-4 h-4 ml-2" />
                         </button>
                         <button

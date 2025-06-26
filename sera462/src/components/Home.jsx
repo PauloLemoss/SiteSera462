@@ -9,7 +9,7 @@ import {
   PlayIcon
 } from '@heroicons/react/24/outline';
 import seraLogo from '../images/sera_logo.jpeg';
-
+  
 const features = [
   {
     icon: AcademicCapIcon,
@@ -75,11 +75,11 @@ const Home = () => {
           <div className="flex flex-col lg:flex-row items-center py-20 lg:py-32">
             <div className="lg:w-1/2 mb-12 lg:mb-0">
               <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-                Transformando a{' '}
+                Transformando o{' '}
                 <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                  Educação
+                  aprendizado
                 </span>{' '}
-                com Tecnologia
+                em uma grande aventura
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
                 Plataforma completa para gestão educacional. Simplifique processos, 

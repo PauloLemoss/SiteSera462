@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function CadastroProfessor() {
+function Turma() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     id_instituicao: "",
-    name: "",
-    email: "",
-    sex: "",
-    telephone: "",
-    document: "",
+    nome: "",
+    horario: "",
   });
 
   const [institutions, setInstitutions] = useState([]);
@@ -80,28 +77,14 @@ function CadastroProfessor() {
       newErrors.id_instituicao = "Instituição é obrigatória";
     }
 
-    if (!formData.name.trim()) {
-      newErrors.name = "Nome é obrigatório";
+    if (!formData.nome.trim()) {
+      newErrors.nome = "Nome da turma é obrigatório";
     }
 
-    if (!formData.email.trim()) {
-      newErrors.email = "Email é obrigatório";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email inválido";
-    }
-
-    if (!formData.sex) {
-      newErrors.sex = "Sexo é obrigatório";
-    }
-
-    if (!formData.telephone.trim()) {
-      newErrors.telephone = "Telefone é obrigatório";
-    }
-
-    if (!formData.document.trim()) {
-      newErrors.document = "CPF é obrigatório";
-    } else if (!/^\d{11}$/.test(formData.document.replace(/\D/g, ""))) {
-      newErrors.document = "CPF inválido";
+    if (!formData.horario.trim()) {
+      newErrors.horario = "Horário é obrigatório";
+    } else if (!/^\d{2}:\d{2}-\d{2}:\d{2}$/.test(formData.horario)) {
+      newErrors.horario = "Formato inválido. Use HH:MM-HH:MM";
     }
 
     setErrors(newErrors);
@@ -119,44 +102,39 @@ function CadastroProfessor() {
     setMessage({ type: "", text: "" });
 
     try {
-      const teacherData = {
+      const now = new Date().toISOString();
+      const classData = {
         id_instituicao: formData.id_instituicao,
-        id_usuario: "550e8400-e29b-41d4-a716-446655440001", // This should be generated or provided
-        name: formData.name,
-        email: formData.email,
-        sex: formData.sex,
-        telephone: formData.telephone,
-        type: "PROFESSOR",
-        document: formData.document.replace(/\D/g, ""),
+        nome: formData.nome,
+        horario: formData.horario,
         enabled: true,
+        created_at: now,
+        updated_at: now,
       };
 
       const response = await fetch(
-        "http://appcad.vps5547.panel.icontainer.run:8080/int/v1/professores",
+        "http://appcad.vps5547.panel.icontainer.run:8080/int/v1/turmas",
         {
           method: "POST",
           headers: {
             "content-type": "application/json",
             "x-tenant-id": "3204fdce-560b-4f19-9bc8-875825662a4a",
           },
-          body: JSON.stringify(teacherData),
+          body: JSON.stringify(classData),
         }
       );
 
       if (response.ok) {
         setMessage({
           type: "success",
-          text: "Professor cadastrado com sucesso!",
+          text: "Turma cadastrada com sucesso!",
         });
         
         // Reset form
         setFormData({
           id_instituicao: "",
-          name: "",
-          email: "",
-          sex: "",
-          telephone: "",
-          document: "",
+          nome: "",
+          horario: "",
         });
         setErrors({});
         
@@ -168,11 +146,11 @@ function CadastroProfessor() {
         const errorData = await response.json().catch(() => ({}));
         setMessage({
           type: "error",
-          text: errorData.message || "Erro ao cadastrar professor. Tente novamente.",
+          text: errorData.message || "Erro ao cadastrar turma. Tente novamente.",
         });
       }
     } catch (error) {
-      console.error("Erro ao cadastrar professor:", error);
+      console.error("Erro ao cadastrar turma:", error);
       setMessage({
         type: "error",
         text: "Erro de conexão. Verifique sua internet.",
@@ -186,14 +164,18 @@ function CadastroProfessor() {
     navigate("/areadeacesso");
   };
 
-  const formatCPF = (value) => {
+  const formatTime = (value) => {
+    // Remove all non-digits
     const numbers = value.replace(/\D/g, "");
-    return numbers.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-  };
-
-  const formatPhone = (value) => {
-    const numbers = value.replace(/\D/g, "");
-    return numbers.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+    
+    // Format as HH:MM-HH:MM
+    if (numbers.length <= 4) {
+      return numbers.replace(/(\d{2})(\d{0,2})/, "$1:$2");
+    } else if (numbers.length <= 8) {
+      return numbers.replace(/(\d{2})(\d{2})-(\d{2})(\d{0,2})/, "$1:$2-$3:$4");
+    }
+    
+    return value;
   };
 
   return (
@@ -202,10 +184,10 @@ function CadastroProfessor() {
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-              Cadastrar Professor
+              Cadastrar Turma
             </h2>
             <p className="text-gray-600 dark:text-gray-400">
-              Preencha os dados do professor
+              Preencha os dados da turma
             </p>
           </div>
 
@@ -254,140 +236,62 @@ function CadastroProfessor() {
               )}
             </div>
 
-            {/* Nome */}
+            {/* Nome da Turma */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Nome Completo *
+                Nome da Turma *
               </label>
               <input
                 type="text"
-                name="name"
-                value={formData.name}
+                name="nome"
+                value={formData.nome}
                 onChange={handleChange}
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                  errors.name
+                  errors.nome
                     ? "border-red-300 bg-red-50 dark:bg-red-900/20"
                     : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
                 }`}
-                placeholder="Digite o nome completo"
+                placeholder="Ex: Turma A - Matemática"
               />
-              {errors.name && (
+              {errors.nome && (
                 <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                  {errors.name}
+                  {errors.nome}
                 </p>
               )}
             </div>
 
-            {/* Email */}
+            {/* Horário */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Email *
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                  errors.email
-                    ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                    : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                }`}
-                placeholder="Digite o email"
-              />
-              {errors.email && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                  {errors.email}
-                </p>
-              )}
-            </div>
-
-            {/* Sexo */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Sexo *
-              </label>
-              <select
-                name="sex"
-                value={formData.sex}
-                onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                  errors.sex
-                    ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                    : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                }`}
-              >
-                <option value="">Selecione o sexo</option>
-                <option value="M">Masculino</option>
-                <option value="F">Feminino</option>
-              </select>
-              {errors.sex && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                  {errors.sex}
-                </p>
-              )}
-            </div>
-
-            {/* Telefone */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Telefone *
-              </label>
-              <input
-                type="tel"
-                name="telephone"
-                value={formData.telephone}
-                onChange={(e) => {
-                  const formatted = formatPhone(e.target.value);
-                  setFormData(prev => ({ ...prev, telephone: formatted }));
-                  if (errors.telephone) {
-                    setErrors(prev => ({ ...prev, telephone: "" }));
-                  }
-                }}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                  errors.telephone
-                    ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                    : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                }`}
-                placeholder="(11) 99999-9999"
-                maxLength={15}
-              />
-              {errors.telephone && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                  {errors.telephone}
-                </p>
-              )}
-            </div>
-
-            {/* CPF */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                CPF *
+                Horário *
               </label>
               <input
                 type="text"
-                name="document"
-                value={formData.document}
+                name="horario"
+                value={formData.horario}
                 onChange={(e) => {
-                  const formatted = formatCPF(e.target.value);
-                  setFormData(prev => ({ ...prev, document: formatted }));
-                  if (errors.document) {
-                    setErrors(prev => ({ ...prev, document: "" }));
+                  const formatted = formatTime(e.target.value);
+                  setFormData(prev => ({ ...prev, horario: formatted }));
+                  if (errors.horario) {
+                    setErrors(prev => ({ ...prev, horario: "" }));
                   }
                 }}
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                  errors.document
+                  errors.horario
                     ? "border-red-300 bg-red-50 dark:bg-red-900/20"
                     : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
                 }`}
-                placeholder="000.000.000-00"
-                maxLength={14}
+                placeholder="08:00-10:00"
+                maxLength={11}
               />
-              {errors.document && (
+              {errors.horario && (
                 <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                  {errors.document}
+                  {errors.horario}
                 </p>
               )}
+              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                Formato: HH:MM-HH:MM (ex: 08:00-10:00)
+              </p>
             </div>
 
             <div className="pt-4">
@@ -410,7 +314,7 @@ function CadastroProfessor() {
                       Cadastrando...
                     </span>
                   ) : (
-                    "Cadastrar Professor"
+                    "Cadastrar Turma"
                   )}
                 </button>
                 
@@ -430,4 +334,4 @@ function CadastroProfessor() {
   );
 }
 
-export default CadastroProfessor;
+export default Turma; 

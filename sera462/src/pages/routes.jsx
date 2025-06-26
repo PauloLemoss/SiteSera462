@@ -7,10 +7,11 @@ import Parceiros from "./Parceiros";
 import QuemSomos from "./QuemSomos";
 import AreadeAcesso from "./AreaDeAcesso";
 import CadastroAluno from "./CadastroAluno";
-import CadastroTurma from "./CadastroTurma";
 import CadastroProfessor from "./CadastroProfessor";
 import Tenant from "./Tenant";
 import User from "./User";
+import Escola from "./Escola";
+import Turma from "./Turma";
 
 const AppRouter = () => (
   <Routes>
@@ -34,16 +35,6 @@ const AppRouter = () => (
         }
       />
 
-      {/* Cadastro de Turma */}
-      <Route
-        path="/cadastroturma"
-        element={
-          <CadastroTurma
-            instituicoes={[{ nome: "Instituição A" }, { nome: "Instituição B" }]}
-          />
-        }
-      />
-
       {/* Cadastro de Professor */}
       <Route
         path="/cadastroprofessor"
@@ -53,6 +44,12 @@ const AppRouter = () => (
           />
         }
       />
+
+      {/* Cadastro de Escola */}
+      <Route path="/escola" element={<Escola />} />
+
+      {/* Cadastro de Turma */}
+      <Route path="/turma" element={<Turma />} />
 
       {/* Cadastro de Tenant (Instituição) */}
       <Route 
