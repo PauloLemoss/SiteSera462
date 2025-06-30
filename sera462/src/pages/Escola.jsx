@@ -254,7 +254,7 @@ function Escola() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Nome */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="form-label">
                   Nome da Instituição *
                 </label>
                 <input
@@ -262,15 +262,11 @@ function Escola() {
                   name="nome"
                   value={formData.nome}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                    errors.nome
-                      ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                      : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                  }`}
+                  className={`form-input ${errors.nome ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                   placeholder="Nome da instituição"
                 />
                 {errors.nome && (
-                  <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                  <p className="form-error">
                     {errors.nome}
                   </p>
                 )}
@@ -278,7 +274,7 @@ function Escola() {
 
               {/* Telefone */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="form-label">
                   Telefone *
                 </label>
                 <input
@@ -286,16 +282,12 @@ function Escola() {
                   name="telefone"
                   value={formData.telefone}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                    errors.telefone
-                      ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                      : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                  }`}
+                  className={`form-input ${errors.telefone ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                   placeholder="(11) 99999-9999"
                   maxLength={15}
                 />
                 {errors.telefone && (
-                  <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                  <p className="form-error">
                     {errors.telefone}
                   </p>
                 )}
@@ -306,7 +298,7 @@ function Escola() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* CNPJ */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="form-label">
                   CNPJ *
                 </label>
                 <input
@@ -314,16 +306,12 @@ function Escola() {
                   name="cnpj"
                   value={formData.cnpj}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                    errors.cnpj
-                      ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                      : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                  }`}
+                  className={`form-input ${errors.cnpj ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                   placeholder="XX.XXX.XXX/XXXX-XX"
                   maxLength={18}
                 />
                 {errors.cnpj && (
-                  <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                  <p className="form-error">
                     {errors.cnpj}
                   </p>
                 )}
@@ -331,7 +319,7 @@ function Escola() {
 
               {/* Email */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="form-label">
                   Email *
                 </label>
                 <input
@@ -339,15 +327,11 @@ function Escola() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                    errors.email
-                      ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                      : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                  }`}
+                  className={`form-input ${errors.email ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                   placeholder="contato@escola.com"
                 />
                 {errors.email && (
-                  <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                  <p className="form-error">
                     {errors.email}
                   </p>
                 )}
@@ -358,7 +342,7 @@ function Escola() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* CEP */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="form-label">
                   CEP *
                 </label>
                 <input
@@ -366,16 +350,12 @@ function Escola() {
                   name="cep"
                   value={formData.cep}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                    errors.cep
-                      ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                      : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                  }`}
+                  className={`form-input ${errors.cep ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                   placeholder="XXXXX-XXX"
                   maxLength={9}
                 />
                 {errors.cep && (
-                  <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                  <p className="form-error">
                     {errors.cep}
                   </p>
                 )}
@@ -383,7 +363,7 @@ function Escola() {
 
               {/* Cidade */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="form-label">
                   Cidade *
                 </label>
                 <input
@@ -391,15 +371,11 @@ function Escola() {
                   name="cidade"
                   value={formData.cidade}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                    errors.cidade
-                      ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                      : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                  }`}
+                  className={`form-input ${errors.cidade ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                   placeholder="Nome da cidade"
                 />
                 {errors.cidade && (
-                  <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                  <p className="form-error">
                     {errors.cidade}
                   </p>
                 )}
@@ -407,18 +383,14 @@ function Escola() {
 
               {/* UF */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="form-label">
                   UF *
                 </label>
                 <select
                   name="uf"
                   value={formData.uf}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                    errors.uf
-                      ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                      : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                  }`}
+                  className={`form-input ${errors.uf ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                 >
                   <option value="">Selecione o estado</option>
                   {estados.map((estado) => (
@@ -428,7 +400,7 @@ function Escola() {
                   ))}
                 </select>
                 {errors.uf && (
-                  <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                  <p className="form-error">
                     {errors.uf}
                   </p>
                 )}
@@ -439,7 +411,7 @@ function Escola() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Rua */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="form-label">
                   Rua *
                 </label>
                 <input
@@ -447,15 +419,11 @@ function Escola() {
                   name="rua"
                   value={formData.rua}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                    errors.rua
-                      ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                      : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                  }`}
+                  className={`form-input ${errors.rua ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                   placeholder="Nome da rua"
                 />
                 {errors.rua && (
-                  <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                  <p className="form-error">
                     {errors.rua}
                   </p>
                 )}
@@ -463,7 +431,7 @@ function Escola() {
 
               {/* Bairro */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="form-label">
                   Bairro *
                 </label>
                 <input
@@ -471,15 +439,11 @@ function Escola() {
                   name="bairro"
                   value={formData.bairro}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                    errors.bairro
-                      ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                      : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                  }`}
+                  className={`form-input ${errors.bairro ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                   placeholder="Nome do bairro"
                 />
                 {errors.bairro && (
-                  <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                  <p className="form-error">
                     {errors.bairro}
                   </p>
                 )}

@@ -15,48 +15,31 @@ function CadastroProfessor() {
 
   const [institutions, setInstitutions] = useState([]);
   const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
 
-  // Load institutions on component mount
-  useEffect(() => {
-    loadInstitutions();
-  }, []);
-
+  // Load institutions from API
   const loadInstitutions = async () => {
-    setIsLoading(true);
     try {
-      const response = await fetch(
-        "https://appcad.vps5547.panel.icontainer.run/int/v1/instituicoes/list",
-        {
-          method: "GET",
-          headers: {
-            "accept": "application/json",
-            "content-type": "application/json",
-          },
-        }
-      );
-
+      setIsLoading(true);
+      const response = await fetch("https://login.vps5547.panel.icontainer.run/api/v1/institution/");
       if (response.ok) {
         const data = await response.json();
         setInstitutions(data);
       } else {
-        setMessage({
-          type: "error",
-          text: "Erro ao carregar instituições. Tente novamente.",
-        });
+        console.error("Failed to load institutions");
       }
     } catch (error) {
-      console.error("Erro ao carregar instituições:", error);
-      setMessage({
-        type: "error",
-        text: "Erro de conexão. Verifique sua internet.",
-      });
+      console.error("Error loading institutions:", error);
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    loadInstitutions();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -224,7 +207,7 @@ function CadastroProfessor() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Instituição */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="form-label">
                 Instituição *
               </label>
               <select
@@ -232,23 +215,23 @@ function CadastroProfessor() {
                 value={formData.id_instituicao}
                 onChange={handleChange}
                 disabled={isLoading}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                  errors.id_instituicao
-                    ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                    : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                }`}
+                className={`form-input ${errors.id_instituicao ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
               >
                 <option value="">
                   {isLoading ? "Carregando..." : "Selecione uma instituição"}
                 </option>
                 {institutions.map((institution) => (
-                  <option key={institution.id} value={institution.id}>
+                  <option 
+                    key={institution.id} 
+                    value={institution.id}
+                    data-loaded="true"
+                  >
                     {institution.name}
                   </option>
                 ))}
               </select>
               {errors.id_instituicao && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="form-error">
                   {errors.id_instituicao}
                 </p>
               )}
@@ -256,7 +239,7 @@ function CadastroProfessor() {
 
             {/* Nome */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="form-label">
                 Nome Completo *
               </label>
               <input
@@ -264,15 +247,11 @@ function CadastroProfessor() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                  errors.name
-                    ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                    : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                }`}
+                className={`form-input ${errors.name ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                 placeholder="Digite o nome completo"
               />
               {errors.name && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="form-error">
                   {errors.name}
                 </p>
               )}
@@ -280,7 +259,7 @@ function CadastroProfessor() {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="form-label">
                 Email *
               </label>
               <input
@@ -288,15 +267,11 @@ function CadastroProfessor() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                  errors.email
-                    ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                    : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                }`}
+                className={`form-input ${errors.email ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                 placeholder="Digite o email"
               />
               {errors.email && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="form-error">
                   {errors.email}
                 </p>
               )}
@@ -304,25 +279,21 @@ function CadastroProfessor() {
 
             {/* Sexo */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="form-label">
                 Sexo *
               </label>
               <select
                 name="sex"
                 value={formData.sex}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                  errors.sex
-                    ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                    : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                }`}
+                className={`form-input ${errors.sex ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
               >
                 <option value="">Selecione o sexo</option>
                 <option value="M">Masculino</option>
                 <option value="F">Feminino</option>
               </select>
               {errors.sex && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="form-error">
                   {errors.sex}
                 </p>
               )}
@@ -330,7 +301,7 @@ function CadastroProfessor() {
 
             {/* Telefone */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="form-label">
                 Telefone *
               </label>
               <input
@@ -344,16 +315,12 @@ function CadastroProfessor() {
                     setErrors(prev => ({ ...prev, telephone: "" }));
                   }
                 }}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                  errors.telephone
-                    ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                    : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                }`}
+                className={`form-input ${errors.telephone ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                 placeholder="(11) 99999-9999"
                 maxLength={15}
               />
               {errors.telephone && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="form-error">
                   {errors.telephone}
                 </p>
               )}
@@ -361,7 +328,7 @@ function CadastroProfessor() {
 
             {/* CPF */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="form-label">
                 CPF *
               </label>
               <input
@@ -375,16 +342,12 @@ function CadastroProfessor() {
                     setErrors(prev => ({ ...prev, document: "" }));
                   }
                 }}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                  errors.document
-                    ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                    : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                }`}
+                className={`form-input ${errors.document ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                 placeholder="000.000.000-00"
                 maxLength={14}
               />
               {errors.document && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="form-error">
                   {errors.document}
                 </p>
               )}

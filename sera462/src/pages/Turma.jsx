@@ -81,10 +81,8 @@ function Turma() {
       newErrors.nome = "Nome da turma é obrigatório";
     }
 
-    if (!formData.horario.trim()) {
+    if (!formData.horario) {
       newErrors.horario = "Horário é obrigatório";
-    } else if (!/^\d{2}:\d{2}-\d{2}:\d{2}$/.test(formData.horario)) {
-      newErrors.horario = "Formato inválido. Use HH:MM-HH:MM";
     }
 
     setErrors(newErrors);
@@ -164,20 +162,6 @@ function Turma() {
     navigate("/areadeacesso");
   };
 
-  const formatTime = (value) => {
-    // Remove all non-digits
-    const numbers = value.replace(/\D/g, "");
-    
-    // Format as HH:MM-HH:MM
-    if (numbers.length <= 4) {
-      return numbers.replace(/(\d{2})(\d{0,2})/, "$1:$2");
-    } else if (numbers.length <= 8) {
-      return numbers.replace(/(\d{2})(\d{2})-(\d{2})(\d{0,2})/, "$1:$2-$3:$4");
-    }
-    
-    return value;
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-8 px-4">
       <div className="max-w-2xl mx-auto">
@@ -206,7 +190,7 @@ function Turma() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Instituição */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="form-label">
                 Instituição *
               </label>
               <select
@@ -214,23 +198,23 @@ function Turma() {
                 value={formData.id_instituicao}
                 onChange={handleChange}
                 disabled={isLoading}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                  errors.id_instituicao
-                    ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                    : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                }`}
+                className={`form-input ${errors.id_instituicao ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
               >
                 <option value="">
                   {isLoading ? "Carregando..." : "Selecione uma instituição"}
                 </option>
                 {institutions.map((institution) => (
-                  <option key={institution.id} value={institution.id}>
+                  <option 
+                    key={institution.id} 
+                    value={institution.id}
+                    data-loaded="true"
+                  >
                     {institution.name}
                   </option>
                 ))}
               </select>
               {errors.id_instituicao && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="form-error">
                   {errors.id_instituicao}
                 </p>
               )}
@@ -238,7 +222,7 @@ function Turma() {
 
             {/* Nome da Turma */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="form-label">
                 Nome da Turma *
               </label>
               <input
@@ -246,15 +230,11 @@ function Turma() {
                 name="nome"
                 value={formData.nome}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                  errors.nome
-                    ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                    : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                }`}
+                className={`form-input ${errors.nome ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
                 placeholder="Ex: Turma A - Matemática"
               />
               {errors.nome && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="form-error">
                   {errors.nome}
                 </p>
               )}
@@ -262,36 +242,25 @@ function Turma() {
 
             {/* Horário */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="form-label">
                 Horário *
               </label>
-              <input
-                type="text"
+              <select
                 name="horario"
                 value={formData.horario}
-                onChange={(e) => {
-                  const formatted = formatTime(e.target.value);
-                  setFormData(prev => ({ ...prev, horario: formatted }));
-                  if (errors.horario) {
-                    setErrors(prev => ({ ...prev, horario: "" }));
-                  }
-                }}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
-                  errors.horario
-                    ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-                    : "border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                }`}
-                placeholder="08:00-10:00"
-                maxLength={11}
-              />
+                onChange={handleChange}
+                className={`form-input ${errors.horario ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
+              >
+                <option value="">Selecione o horário</option>
+                <option value="manhã">Manhã</option>
+                <option value="tarde">Tarde</option>
+                <option value="noite">Noite</option>
+              </select>
               {errors.horario && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="form-error">
                   {errors.horario}
                 </p>
               )}
-              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                Formato: HH:MM-HH:MM (ex: 08:00-10:00)
-              </p>
             </div>
 
             <div className="pt-4">
