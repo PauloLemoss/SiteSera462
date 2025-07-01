@@ -23,7 +23,7 @@ function CadastroProfessor() {
   const loadInstitutions = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("https://login.vps5547.panel.icontainer.run/api/v1/institution/");
+      const response = await fetch("https://appcad.vps5547.panel.icontainer.run/int/v1/instituicoes/list");
       if (response.ok) {
         const data = await response.json();
         setInstitutions(data);
@@ -58,7 +58,7 @@ function CadastroProfessor() {
 
   const validateForm = () => {
     const newErrors = {};
-
+    
     if (!formData.id_instituicao.trim()) {
       newErrors.id_instituicao = "Instituição é obrigatória";
     }

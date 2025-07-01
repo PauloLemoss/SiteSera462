@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { 
   AcademicCapIcon, 
@@ -6,7 +6,7 @@ import {
   ArrowLeftIcon
 } from '@heroicons/react/24/outline';
 
-function CadastroAluno({ instituicoes = [], turmas = [] }) {
+function CadastroAluno() {
   const navigate = useNavigate();
 
   const [valores, setValores] = useState({
@@ -14,13 +14,56 @@ function CadastroAluno({ instituicoes = [], turmas = [] }) {
     matricula: "",
     nascimento: "",
     sexo: "",
-    turma: "",
-    instituicao: "",
+    turma_id: "",
+    instituicao_id: "",
   });
 
+  const [turmas, setTurmas] = useState([]);
+  const [instituicoes, setInstituicoes] = useState([]);
   const [erros, setErros] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Load turmas from API
+  const loadTurmas = async () => {
+    try {
+      const response = await fetch("https://appcad.vps5547.panel.icontainer.run/int/v1/turmas/list");
+      if (response.ok) {
+        const data = await response.json();
+        setTurmas(data);
+      } else {
+        console.error("Failed to load turmas");
+      }
+    } catch (error) {
+      console.error("Error loading turmas:", error);
+    }
+  };
+
+  // Load instituicoes from API
+  const loadInstituicoes = async () => {
+    try {
+      const response = await fetch("https://appcad.vps5547.panel.icontainer.run/int/v1/instituicoes/list");
+      if (response.ok) {
+        const data = await response.json();
+        setInstituicoes(data);
+      } else {
+        console.error("Failed to load instituicoes");
+      }
+    } catch (error) {
+      console.error("Error loading instituicoes:", error);
+    }
+  };
+
+  // Load data on component mount
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoading(true);
+      await Promise.all([loadTurmas(), loadInstituicoes()]);
+      setIsLoading(false);
+    };
+    loadData();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,8 +103,8 @@ function CadastroAluno({ instituicoes = [], turmas = [] }) {
           matricula: "",
           nascimento: "",
           sexo: "",
-          turma: "",
-          instituicao: "",
+          turma_id: "",
+          instituicao_id: "",
         });
         setErros({});
       } catch (error) {
@@ -198,54 +241,60 @@ function CadastroAluno({ instituicoes = [], turmas = [] }) {
                 </div>
 
                 <div>
-                  <label htmlFor="turma" className="form-label">
+                  <label htmlFor="turma_id" className="form-label">
                     Turma *
                   </label>
                   <select
-                    id="turma"
-                    name="turma"
-                    className={`form-input ${erros.turma ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
-                    value={valores.turma}
+                    id="turma_id"
+                    name="turma_id"
+                    disabled={isLoading}
+                    className={`form-input ${erros.turma_id ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
+                    value={valores.turma_id}
                     onChange={handleChange}
                   >
-                    <option value="">Selecione a turma</option>
-                    {turmas.map((turma, idx) => (
-                      <option key={idx} value={turma.nome}>
-                        {turma.nome}
+                    <option value="">
+                      {isLoading ? "Carregando..." : "Selecione a turma"}
+                    </option>
+                    {turmas.map((turma) => (
+                      <option key={turma.id} value={turma.id}>
+                        {turma.name}
                       </option>
                     ))}
                   </select>
-                  {erros.turma && <p className="form-error">Campo obrigatório</p>}
+                  {erros.turma_id && <p className="form-error">Campo obrigatório</p>}
                 </div>
               </div>
 
               {/* Instituição */}
               <div>
-                <label htmlFor="instituicao" className="form-label">
+                <label htmlFor="instituicao_id" className="form-label">
                   Instituição *
                 </label>
                 <select
-                  id="instituicao"
-                  name="instituicao"
-                  className={`form-input ${erros.instituicao ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
-                  value={valores.instituicao}
+                  id="instituicao_id"
+                  name="instituicao_id"
+                  disabled={isLoading}
+                  className={`form-input ${erros.instituicao_id ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
+                  value={valores.instituicao_id}
                   onChange={handleChange}
                 >
-                  <option value="">Selecione a instituição</option>
-                  {instituicoes.map((inst, idx) => (
-                    <option key={idx} value={inst.nome}>
+                  <option value="">
+                    {isLoading ? "Carregando..." : "Selecione a instituição"}
+                  </option>
+                  {instituicoes.map((inst) => (
+                    <option key={inst.id} value={inst.id}>
                       {inst.nome}
                     </option>
                   ))}
                 </select>
-                {erros.instituicao && <p className="form-error">Campo obrigatório</p>}
+                {erros.instituicao_id && <p className="form-error">Campo obrigatório</p>}
               </div>
 
               {/* Submit Button */}
               <div className="pt-6">
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || isLoading}
                   className="btn-primary w-full py-3 text-lg"
                 >
                   {isSubmitting ? (
