@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 function CadastroProfessor() {
   const navigate = useNavigate();
 
+  // Estado para controlar quando um select está aberto
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
+
   const [formData, setFormData] = useState({
     id_instituicao: "",
     name: "",
@@ -104,7 +107,7 @@ function CadastroProfessor() {
     try {
       const teacherData = {
         id_instituicao: formData.id_instituicao,
-        id_usuario: "550e8400-e29b-41d4-a716-446655440001", // This should be generated or provided
+        id_usuario: "550e8400-e29b-41d4-a716-446655440001",
         name: formData.name,
         email: formData.email,
         sex: formData.sex,
@@ -215,16 +218,24 @@ function CadastroProfessor() {
                 value={formData.id_instituicao}
                 onChange={handleChange}
                 disabled={isLoading}
-                className={`form-input ${errors.id_instituicao ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
+                onFocus={() => setIsSelectOpen(true)}
+                onBlur={() => setIsSelectOpen(false)}
+                className={`form-input ${errors.id_instituicao ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''} ${
+                  isSelectOpen ? 'ring-2 ring-blue-500' : ''
+                }`}
+                style={{
+                  backgroundColor: '#ffffff',
+                  color: '#000000'
+                }}
               >
-                <option value="">
+                <option value="" style={{ backgroundColor: '#ffffff', color: '#000000' }}>
                   {isLoading ? "Carregando..." : "Selecione uma instituição"}
                 </option>
                 {institutions.map((institution) => (
                   <option 
                     key={institution.id} 
                     value={institution.id}
-                    data-loaded="true"
+                    style={{ backgroundColor: '#ffffff', color: '#000000' }}
                   >
                     {institution.name}
                   </option>
@@ -286,11 +297,19 @@ function CadastroProfessor() {
                 name="sex"
                 value={formData.sex}
                 onChange={handleChange}
-                className={`form-input ${errors.sex ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}`}
+                onFocus={() => setIsSelectOpen(true)}
+                onBlur={() => setIsSelectOpen(false)}
+                className={`form-input ${errors.sex ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''} ${
+                  isSelectOpen ? 'ring-2 ring-blue-500' : ''
+                }`}
+                style={{
+                  backgroundColor: '#ffffff',
+                  color: '#000000'
+                }}
               >
-                <option value="">Selecione o sexo</option>
-                <option value="M">Masculino</option>
-                <option value="F">Feminino</option>
+                <option value="" style={{ backgroundColor: '#ffffff', color: '#000000' }}>Selecione o sexo</option>
+                <option value="M" style={{ backgroundColor: '#ffffff', color: '#000000' }}>Masculino</option>
+                <option value="F" style={{ backgroundColor: '#ffffff', color: '#000000' }}>Feminino</option>
               </select>
               {errors.sex && (
                 <p className="form-error">

@@ -99,15 +99,13 @@ const Home = () => {
                 >
                   Entrar
                 </Link>
-                <a
-                  href="https://drive.google.com/file/d/1Cbe3xD2-zsyQEp6nanM9N9-8SfhO_vQe/view?usp=drive_link"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/video-demo"
                   className="btn-outline text-lg px-8 py-3 flex items-center justify-center"
                 >
                   <PlayIcon className="w-5 h-5 mr-2" />
                   Ver Demo
-                </a>
+                </Link>
               </div>
             </div>
             <div className="lg:w-1/2 lg:pl-12">
