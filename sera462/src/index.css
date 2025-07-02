@@ -38,16 +38,20 @@
     @apply btn text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-gray-800;
   }
 
-  /* Form Styles */
+  /* --- INÍCIO DA SEÇÃO CORRIGIDA --- */
+  
+  /* Form Styles (Inputs, Textareas, etc.) */
   .form-input {
-    @apply block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:ring-primary dark:focus:border-primary;
+    @apply block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 
+           focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary 
+           transition-all duration-200 
+           dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-500 
+           dark:focus:ring-primary dark:focus:border-primary;
   }
   
-  /* Clean and effective select styling */
+  /* Estilização específica e simplificada para SELECT */
   select.form-input {
-    @apply text-gray-900 dark:text-gray-100;
-    background-color: #ffffff !important;
-    color: #000000 !important;
+    /* Aparência customizada com seta */
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
     background-position: right 0.5rem center;
     background-repeat: no-repeat;
@@ -56,103 +60,33 @@
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+
+    /* Cores para Light Mode */
+    @apply bg-white text-gray-900;
   }
   
+  /* Cores e seta para Dark Mode no SELECT */
   .dark select.form-input {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    @apply bg-gray-700 text-gray-100 border-gray-600;
+  }
+
+  /* Estilização das opções do select */
+  select.form-input option {
+    @apply bg-white text-black; /* Light Mode */
+  }
+
+  .dark select.form-input option {
+    @apply bg-gray-700 text-white; /* Dark Mode */
+  }
+
+  /* Também se aplica à classe .input-text se você a usa para selects */
+  select.input-text {
+    @apply form-input;
   }
   
-  /* Estilo base para selects */
-select.form-input {
-  @apply text-gray-900 dark:text-gray-100;
-  background-color: white;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-  background-position: right 0.75rem center;
-  background-repeat: no-repeat;
-  background-size: 1.25em 1.25em;
-  padding-right: 2.5rem;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-/* Dark mode para o select */
-.dark select.form-input {
-  background-color: #1f2937;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%9ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-  border-color: #4b5563;
-}
-
-/* Estilo para as opções do dropdown */
-select.form-input option {
-  background-color: white;
-  color: #111827;
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
-/* Dark mode para as opções */
-.dark select.form-input option {
-  background-color: #1f2937;
-  color: #f9fafb;
-}
-
-/* Estilo para opções selecionadas */
-select.form-input option:checked,
-select.form-input option:selected {
-  background-color: #eff6ff;
-  color: #1e40af;
-  font-weight: 500;
-}
-
-.dark select.form-input option:checked,
-.dark select.form-input option:selected {
-  background-color: #1e40af;
-  color: #f9fafb;
-}
-
-/* Estilo hover para opções */
-select.form-input option:hover {
-  background-color: #f3f4f6;
-}
-
-.dark select.form-input option:hover {
-  background-color: #374151;
-}
-
-/* Foco no select */
-select.form-input:focus {
-  @apply ring-2 ring-blue-500 border-blue-500 outline-none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
-}
-
-.dark select.form-input:focus {
-  border-color: #3b82f6;
-}
-
-/* Melhorar a visibilidade do dropdown aberto */
-select.form-input:focus option {
-  background-color: white;
-  color: #111827;
-}
-
-.dark select.form-input:focus option {
-  background-color: #1f2937;
-  color: #f9fafb;
-}
-
-/* Correção para Firefox */
-@-moz-document url-prefix() {
-  select.form-input {
-    padding-right: 1.75rem;
-    background-position: right 0.5rem center;
-  }
-}
+  /* --- FIM DA SEÇÃO CORRIGIDA --- */
+  
   .form-label {
     @apply block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300;
   }
@@ -227,27 +161,6 @@ select.form-input:focus option {
   .glass {
     @apply bg-white/80 backdrop-blur-sm border border-white/20 dark:bg-gray-900/80 dark:border-gray-700/20;
   }
-
-  /* Styling for input-text class (used in CadastroTurma.jsx) */
-  select.input-text {
-    @apply text-gray-900 dark:text-gray-100;
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-    background-position: right 0.5rem center;
-    background-repeat: no-repeat;
-    background-size: 1.5em 1.5em;
-    padding-right: 2.5rem;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-  }
-  
-  .dark select.input-text {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-  }
 }
 
 @layer utilities {
@@ -268,34 +181,18 @@ select.form-input:focus option {
 
 /* Keyframe animations */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 /* Spinner animation */
@@ -312,177 +209,7 @@ select.form-input:focus option {
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
 
-/* Ensure select dropdowns work properly across all browsers */
-select {
-  position: relative;
-  z-index: 1;
-}
-
-/* Remove any overflow hidden that might clip dropdown */
-select {
-  overflow: visible;
-}
-
-/* Ensure proper stacking context for dropdowns */
-select:focus {
-  z-index: 10;
-}
-
-/* Firefox specific fixes */
-select:-moz-focusring {
-  color: transparent;
-  text-shadow: 0 0 0 #000000;
-}
-
-.dark select:-moz-focusring {
-  text-shadow: 0 0 0 #f9fafb;
-}
-
-/* Safari and Chrome specific fixes */
-select::-webkit-select-placeholder {
-  color: #6b7280 !important;
-}
-
-.dark select::-webkit-select-placeholder {
-  color: #9ca3af;
-}
-
-/* Global rule to ensure ALL options are visible */
-option,
-select option,
-option[value],
-option[value]:not([value=""]),
-select option[value]:not([value=""]) {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-  font-weight: normal !important;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-/* Ensure options are visible when select is open */
-select:focus option,
-select:active option,
-select:hover option {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-/* Ensure text is visible in all browsers */
-select,
-select option,
-select option:checked,
-select option:selected {
-  color: #000000 !important;
-}
-
-/* Firefox specific styling */
-select:-moz-focusring {
-  color: transparent;
-  text-shadow: 0 0 0 #000000;
-}
-
-/* Safari and Chrome specific styling */
-select::-webkit-select-placeholder {
-  color: #6b7280 !important;
-}
-
-/* Ensure proper contrast for all select elements */
-select:focus {
-  color: #000000 !important;
-}
-
-select:focus option {
-  color: #000000 !important;
-  background-color: #ffffff !important;
-}
-
-select:focus option:checked {
-  color: #000000 !important;
-  background-color: #dbeafe !important;
-}
-
-/* Specific styling for dynamically loaded options from APIs */
-select option[value]:not([value=""]) {
-  color: #000000 !important;
-  background-color: #ffffff !important;
-  font-weight: normal !important;
-}
-
-/* Ensure options with actual values are visible */
-select option:not([value=""]) {
-  color: #000000 !important;
-  background-color: #ffffff !important;
-}
-
-/* Style for options that are loaded from API */
-select option[data-loaded="true"] {
-  color: #000000 !important;
-  background-color: #ffffff !important;
-}
-
-/* Dark mode for dynamic options */
-.dark select option[value]:not([value=""]) {
-  color: #000000 !important;
-  background-color: #ffffff !important;
-}
-
-.dark select option:not([value=""]) {
-  color: #000000 !important;
-  background-color: #ffffff !important;
-}
-
-.dark option {
-  color: #000000 !important;
-  background-color: #ffffff !important;
-}
-
-/* Global select styling - ensure white background and black text */
-select {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-}
-
-.dark select {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-}
-
-/* Ensure select options are always visible */
-select option {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-  padding: 8px 12px;
-}
-
-.dark select option {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-}
-
-/* Selected option styling */
-select option:checked,
-select option:selected {
-  background-color: #dbeafe !important;
-  color: #000000 !important;
-}
-
-.dark select option:checked,
-.dark select option:selected {
-  background-color: #dbeafe !important;
-  color: #000000 !important;
-}
-
-/* Hover effect for options */
-select option:hover {
-  background-color: #f3f4f6 !important;
-  color: #000000 !important;
-}
-
-.dark select option:hover {
-  background-color: #f3f4f6 !important;
-  color: #000000 !important;
-} 
+/* NOTA: Todas as regras CSS que estavam aqui no final,
+  forçando cores em 'select' e 'option' com '!important',
+  foram REMOVIDAS pois eram a causa do problema.
+*/

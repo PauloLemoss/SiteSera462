@@ -209,7 +209,7 @@ function Turma() {
                     value={institution.id}
                     data-loaded="true"
                   >
-                    {institution.name}
+                    {institution.nome}
                   </option>
                 ))}
               </select>
