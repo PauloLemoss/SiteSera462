@@ -77,12 +77,12 @@ function CadastroProfessor() {
       const teacherData = {
         id_instituicao: formData.id_instituicao,
         id_usuario: "550e8400-e29b-41d4-a716-446655440001",
-        name: formData.name,
+        nome: formData.name,        // corrigido
         email: formData.email,
-        sex: formData.sex,
-        telephone: formData.telephone,
-        type: "PROFESSOR",
-        document: formData.document.replace(/\D/g, ""),
+        sexo: formData.sex,         // corrigido
+        telefone: formData.telephone, // corrigido
+        tipo: "PROFESSOR",          // corrigido
+        documento: formData.document.replace(/\D/g, ""), // corrigido
         enabled: true,
       };
 
@@ -148,7 +148,7 @@ function CadastroProfessor() {
                 </option>
                 {institutions.map((institution) => (
                   <option key={institution.id} value={institution.id}>
-                    {institution.nome} {/* <-- AQUI ESTÁ A CORREÇÃO */}
+                    {institution.nome}
                   </option>
                 ))}
               </select>
