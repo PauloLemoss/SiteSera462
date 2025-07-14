@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   UserCircleIcon, 
   LockClosedIcon,
@@ -6,8 +7,11 @@ import {
   EyeSlashIcon,
   ExclamationTriangleIcon
 } from '@heroicons/react/24/outline';
+import { useAuth } from '../contexts/AuthContext';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     username: '',
     password: ''
@@ -65,29 +69,13 @@ const Login = () => {
     setError('');
     
     try {
-      const response = await fetch('https://login.vps5547.panel.icontainer.run/api/v1/user/getjwt', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: formData.username,
-          password: formData.password
-        })
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Success - store tokens
-        localStorage.setItem('accessToken', data.accessToken);
-        localStorage.setItem('refreshToken', data.refreshToken);
-        
-        // Redirect to dashboard or home page
-        window.location.href = '/';
+      const result = await login(formData.username, formData.password);
+      
+      if (result.success) {
+        // Redirect to home page
+        navigate('/');
       } else {
-        // Error - show error message
-        setError('Nome de usuário ou senha inválidos.');
+        setError(result.error);
       }
     } catch (error) {
       console.error('Login error:', error);

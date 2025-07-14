@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import paulo from '../images/paulo.png'
 import charles from '../images/charles.png'
-import arthur from '../images/Arthur.png'
 import charleu from '../images/charleu2.png'
 import izabel from '../images/izabel.png'
-import isael from '../images/isael.png'
 
 const membros = [
   {
@@ -35,20 +33,7 @@ const membros = [
     descricao: 'Instrutora no CESA, Cursando analise e desenvolvimento de sistemas',
     imagem: izabel,
   },
-  {
-    id: 4,
-    nome: 'ARTHUR STIVEN',
-    cargo: 'ARTISTA 3D/UX',
-    descricao: 'Com mais de 10 anos de experiência com arte digital e modelagem 3D',
-    imagem: arthur,
-  },
-  {
-    id: 5,
-    nome: 'ISAEL SOUSA SANTOS',
-    cargo: 'DevOps na AWS',
-    descricao: 'Com mais de 5 anos como arquiteto de software na empresa IsSoft Tecnologia Ltda',
-    imagem: isael,
-  }
+
 ];
 
 function Equipe() {

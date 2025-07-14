@@ -15,6 +15,8 @@ import {
   UserGroupIcon
 } from '@heroicons/react/24/outline';
 import ThemeToggle from './ThemeToggle';
+import UserInfoBar from './UserInfoBar';
+import { useAuth } from '../contexts/AuthContext';
 
 const navigation = [
   { name: 'Início', href: '/', icon: HomeIcon },
@@ -41,8 +43,18 @@ function classNames(...classes) {
 const Layout = () => {
   const location = useLocation();
   const [isAdminMenuOpen, setIsAdminMenuOpen] = useState(false);
+  const { isAuthenticated, isLoading } = useAuth();
 
   const isActive = (path) => location.pathname === path;
+
+  // Show loading spinner while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="spinner w-8 h-8"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
@@ -81,57 +93,67 @@ const Layout = () => {
                     </Link>
                   ))}
                   
-                  {/* Admin Menu Dropdown */}
-                  <div className="relative">
-                    <button
-                      onClick={() => setIsAdminMenuOpen(!isAdminMenuOpen)}
+                  {/* Admin Menu Dropdown or Login Link */}
+                  {isAuthenticated ? (
+                    <div className="relative">
+                      <button
+                        onClick={() => setIsAdminMenuOpen(!isAdminMenuOpen)}
+                        className="nav-link flex items-center"
+                      >
+                        <UserCircleIcon className="w-4 h-4 mr-2" />
+                        Administração
+                        <svg
+                          className={`ml-1 w-4 h-4 transition-transform duration-200 ${
+                            isAdminMenuOpen ? 'rotate-180' : ''
+                          }`}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+
+                      <Transition
+                        show={isAdminMenuOpen}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                      >
+                        <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-medium border border-gray-200 dark:border-gray-700 z-50">
+                          <div className="py-1">
+                            {adminNavigation.map((item) => (
+                              <Link
+                                key={item.name}
+                                to={item.href}
+                                className={classNames(
+                                  isActive(item.href)
+                                    ? 'bg-primary/10 text-primary dark:bg-primary/20'
+                                    : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700',
+                                  'flex items-center px-4 py-2 text-sm transition-colors duration-200'
+                                )}
+                                onClick={() => setIsAdminMenuOpen(false)}
+                              >
+                                <item.icon className="w-4 h-4 mr-3" />
+                                {item.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      </Transition>
+                    </div>
+                  ) : (
+                    <Link
+                      to="/login"
                       className="nav-link flex items-center"
                     >
                       <UserCircleIcon className="w-4 h-4 mr-2" />
-                      Administração
-                      <svg
-                        className={`ml-1 w-4 h-4 transition-transform duration-200 ${
-                          isAdminMenuOpen ? 'rotate-180' : ''
-                        }`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-
-                    <Transition
-                      show={isAdminMenuOpen}
-                      enter="transition ease-out duration-100"
-                      enterFrom="transform opacity-0 scale-95"
-                      enterTo="transform opacity-100 scale-100"
-                      leave="transition ease-in duration-75"
-                      leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95"
-                    >
-                      <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-medium border border-gray-200 dark:border-gray-700 z-50">
-                        <div className="py-1">
-                          {adminNavigation.map((item) => (
-                            <Link
-                              key={item.name}
-                              to={item.href}
-                              className={classNames(
-                                isActive(item.href)
-                                  ? 'bg-primary/10 text-primary dark:bg-primary/20'
-                                  : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700',
-                                'flex items-center px-4 py-2 text-sm transition-colors duration-200'
-                              )}
-                              onClick={() => setIsAdminMenuOpen(false)}
-                            >
-                              <item.icon className="w-4 h-4 mr-3" />
-                              {item.name}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </Transition>
-                  </div>
+                      Login
+                    </Link>
+                  )}
 
                   {/* Theme Toggle */}
                   <div className="ml-4">
@@ -173,33 +195,52 @@ const Layout = () => {
                   </Disclosure.Button>
                 ))}
                 
-                {/* Mobile Admin Menu */}
-                <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
-                  <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Administração
+                {/* Mobile Admin Menu or Login */}
+                {isAuthenticated ? (
+                  <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Administração
+                    </div>
+                    {adminNavigation.map((item) => (
+                      <Disclosure.Button
+                        key={item.name}
+                        as={Link}
+                        to={item.href}
+                        className={classNames(
+                          isActive(item.href)
+                            ? 'bg-primary/10 text-primary dark:bg-primary/20'
+                            : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700',
+                          'flex items-center px-3 py-2 rounded-lg text-base font-medium transition-colors duration-200'
+                        )}
+                      >
+                        <item.icon className="w-5 h-5 mr-3" />
+                        {item.name}
+                      </Disclosure.Button>
+                    ))}
                   </div>
-                  {adminNavigation.map((item) => (
-                    <Disclosure.Button
-                      key={item.name}
-                      as={Link}
-                      to={item.href}
-                      className={classNames(
-                        isActive(item.href)
-                          ? 'bg-primary/10 text-primary dark:bg-primary/20'
-                          : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700',
-                        'flex items-center px-3 py-2 rounded-lg text-base font-medium transition-colors duration-200'
-                      )}
-                    >
-                      <item.icon className="w-5 h-5 mr-3" />
-                      {item.name}
-                    </Disclosure.Button>
-                  ))}
-                </div>
+                ) : (
+                  <Disclosure.Button
+                    as={Link}
+                    to="/login"
+                    className={classNames(
+                      isActive('/login')
+                        ? 'bg-primary/10 text-primary dark:bg-primary/20'
+                        : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700',
+                      'flex items-center px-3 py-2 rounded-lg text-base font-medium transition-colors duration-200'
+                    )}
+                  >
+                    <UserCircleIcon className="w-5 h-5 mr-3" />
+                    Login
+                  </Disclosure.Button>
+                )}
               </div>
             </Disclosure.Panel>
           </>
         )}
       </Disclosure>
+
+      {/* User Info Bar */}
+      {isAuthenticated && <UserInfoBar />}
 
       {/* Main Content */}
       <main className="flex-1">

@@ -18,12 +18,10 @@ import VideoDemo from "./VideoDemo";
 
 const AppRouter = () => (
   <Routes>
-    {/* Login route - outside Layout (no navigation menu) */}
-    <Route path="/login" element={<Login />} />
-    
-    {/* Todas as rotas abaixo compartilham o Layout (com o menu) */}
+    {/* Todas as rotas compartilham o Layout (com o menu) */}
     <Route element={<Layout />}>
       <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/equipe" element={<Equipe />} />
       <Route path="/contato" element={<Contato />} />
       <Route path="/parceiros" element={<Parceiros />} />
