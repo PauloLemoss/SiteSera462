@@ -18,7 +18,7 @@ function CadastroTurma() {
   // Load instituicoes from API
   const loadInstituicoes = async () => {
     try {
-      const response = await fetch("https://appcad.vps5547.panel.icontainer.run/int/v1/instituicoes/list");
+      const response = await fetch("https://appcad.vps5695.panel.icontainer.run/int/v1/instituicoes/list");
       if (response.ok) {
         const data = await response.json();
         setInstituicoes(data);

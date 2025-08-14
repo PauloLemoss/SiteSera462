@@ -28,7 +28,7 @@ function CadastroAluno() {
   // Load turmas from API
   const loadTurmas = async () => {
     try {
-      const response = await fetch("https://appcad.vps5547.panel.icontainer.run/int/v1/turmas/list");
+      const response = await fetch("https://appcad.vps5695.panel.icontainer.run/int/v1/turmas/list");
       if (response.ok) {
         const data = await response.json();
         setTurmas(data);
@@ -43,7 +43,7 @@ function CadastroAluno() {
   // Load instituicoes from API
   const loadInstituicoes = async () => {
     try {
-      const response = await fetch("https://appcad.vps5547.panel.icontainer.run/int/v1/instituicoes/list");
+      const response = await fetch("https://appcad.vps5695.panel.icontainer.run/int/v1/instituicoes/list");
       if (response.ok) {
         const data = await response.json();
         setInstituicoes(data);

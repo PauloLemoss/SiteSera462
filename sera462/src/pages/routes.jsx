@@ -15,6 +15,7 @@ import Turma from "./Turma";
 import Mataria from "./Mataria";
 import Login from "./Login";
 import VideoDemo from "./VideoDemo";
+import Dashboard from "./Dashboard";
 
 const AppRouter = () => (
   <Routes>
@@ -28,6 +29,7 @@ const AppRouter = () => (
       <Route path="/quemsomos" element={<QuemSomos />} />
       <Route path="/areadeacesso" element={<AreadeAcesso />} />
       <Route path="/video-demo" element={<VideoDemo />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       
       {/* Cadastro de Aluno */}
       <Route

@@ -22,7 +22,7 @@ function CadastroProfessor() {
   const loadInstitutions = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("https://appcad.vps5547.panel.icontainer.run/int/v1/instituicoes/list");
+      const response = await fetch("https://appcad.vps5695.panel.icontainer.run/int/v1/instituicoes/list");
       if (response.ok) {
         const data = await response.json();
         setInstitutions(data);
@@ -86,7 +86,7 @@ function CadastroProfessor() {
         enabled: true,
       };
 
-      const response = await fetch("https://appcad.vps5547.panel.icontainer.run/int/v1/professores", {
+      const response = await fetch("https://appcad.vps5695.panel.icontainer.run/int/v1/professores", {
         method: "POST",
         headers: {
           "content-type": "application/json",

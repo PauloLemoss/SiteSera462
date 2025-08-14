@@ -51,7 +51,7 @@ const Mataria = () => {
     setMessage({ type: '', text: '' });
 
     try {
-      const response = await fetch('https://appcad.vps5547.panel.icontainer.run/int/v1/materias', {
+      const response = await fetch('https://appcad.vps5695.panel.icontainer.run/int/v1/materias', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

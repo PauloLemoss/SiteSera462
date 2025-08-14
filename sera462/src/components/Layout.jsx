@@ -12,7 +12,8 @@ import {
   UserCircleIcon,
   AcademicCapIcon,
   BuildingOfficeIcon,
-  UserGroupIcon
+  UserGroupIcon,
+  ChartBarIcon
 } from '@heroicons/react/24/outline';
 import ThemeToggle from './ThemeToggle';
 import UserInfoBar from './UserInfoBar';
@@ -27,6 +28,7 @@ const navigation = [
 ];
 
 const adminNavigation = [
+  { name: 'Dashboard', href: '/dashboard', icon: ChartBarIcon },
   { name: 'Área de Acesso', href: '/areadeacesso', icon: UserCircleIcon },
   { name: 'Cadastro Aluno', href: '/cadastroaluno', icon: AcademicCapIcon },
   { name: 'Cadastro Turma', href: '/turma', icon: UserGroupIcon },

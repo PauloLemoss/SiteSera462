@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('accessToken');
       if (token) {
         try {
-          const response = await fetch('https://login.vps5547.panel.icontainer.run/api/v1/user/validatejwt', {
+          const response = await fetch('https://login.vps5695.panel.icontainer.run/api/v1/user/validatejwt', {
             method: 'POST',
             headers: {
               'Authorization': token, // Token already includes "Bearer " prefix
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
-      const response = await fetch('https://login.vps5547.panel.icontainer.run/api/v1/user/getjwt', {
+      const response = await fetch('https://login.vps5695.panel.icontainer.run/api/v1/user/getjwt', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('refreshToken', data.refreshToken);
 
       // Validate token to get user info
-      const validateResponse = await fetch('https://login.vps5547.panel.icontainer.run/api/v1/user/validatejwt', {
+      const validateResponse = await fetch('https://login.vps5695.panel.icontainer.run/api/v1/user/validatejwt', {
         method: 'POST',
         headers: {
           'Authorization': data.accessToken, // Token already includes "Bearer " prefix

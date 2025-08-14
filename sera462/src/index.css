@@ -49,6 +49,10 @@
            dark:focus:ring-primary dark:focus:border-primary;
   }
   
+  .form-select {
+    @apply form-input;
+  }
+  
   /* Estilização específica e simplificada para SELECT */
   select.form-input {
     /* Aparência customizada com seta */

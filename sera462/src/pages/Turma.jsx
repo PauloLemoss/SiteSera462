@@ -25,7 +25,7 @@ function Turma() {
     setIsLoading(true);
     try {
       const response = await fetch(
-        "https://appcad.vps5547.panel.icontainer.run/int/v1/instituicoes/list",
+        "https://appcad.vps5695.panel.icontainer.run/int/v1/instituicoes/list",
         {
           method: "GET",
           headers: {
@@ -111,7 +111,7 @@ function Turma() {
       };
 
       const response = await fetch(
-        "https://appcad.vps5547.panel.icontainer.run/int/v1/turmas",
+        "https://appcad.vps5695.panel.icontainer.run/int/v1/turmas",
         {
           method: "POST",
           headers: {
