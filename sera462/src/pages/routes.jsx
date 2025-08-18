@@ -7,19 +7,29 @@ import Parceiros from "./Parceiros";
 import QuemSomos from "./QuemSomos";
 import AreadeAcesso from "./AreaDeAcesso";
 import CadastroAluno from "./CadastroAluno";
-import CadastroTurma from "./CadastroTurma";
 import CadastroProfessor from "./CadastroProfessor";
+import Tenant from "./Tenant";
+import User from "./User";
+import Escola from "./Escola";
+import Turma from "./Turma";
+import Mataria from "./Mataria";
+import Login from "./Login";
+import VideoDemo from "./VideoDemo";
+import Dashboard from "./Dashboard";
 
 const AppRouter = () => (
   <Routes>
-    {/* Todas as rotas abaixo compartilham o Layout (com o menu) */}
+    {/* Todas as rotas compartilham o Layout (com o menu) */}
     <Route element={<Layout />}>
       <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/equipe" element={<Equipe />} />
       <Route path="/contato" element={<Contato />} />
       <Route path="/parceiros" element={<Parceiros />} />
       <Route path="/quemsomos" element={<QuemSomos />} />
       <Route path="/areadeacesso" element={<AreadeAcesso />} />
+      <Route path="/video-demo" element={<VideoDemo />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       
       {/* Cadastro de Aluno */}
       <Route
@@ -32,17 +42,7 @@ const AppRouter = () => (
         }
       />
 
-      {/* Cadastro de Turma */}
-      <Route
-        path="/cadastroturma"
-        element={
-          <CadastroTurma
-            instituicoes={[{ nome: "Instituição A" }, { nome: "Instituição B" }]}
-          />
-        }
-      />
-
-      {/* Cadastro de Professor (agora dentro do Layout) */}
+      {/* Cadastro de Professor */}
       <Route
         path="/cadastroprofessor"
         element={
@@ -50,6 +50,30 @@ const AppRouter = () => (
             instituicoes={[{ nome: "Instituição A" }, { nome: "Instituição B" }]}
           />
         }
+      />
+
+      {/* Cadastro de Escola */}
+      <Route path="/escola" element={<Escola />} />
+
+      {/* Cadastro de Turma */}
+      <Route path="/turma" element={<Turma />} />
+
+      {/* Cadastro de Tenant (Instituição) */}
+      <Route 
+        path="/tenant" 
+        element={<Tenant />} 
+      />
+
+      {/* Cadastro de Usuário */}
+      <Route 
+        path="/user" 
+        element={<User />} 
+      />
+
+      {/* Cadastro de Matéria */}
+      <Route 
+        path="/mataria" 
+        element={<Mataria />} 
       />
     </Route>
   </Routes>

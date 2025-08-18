@@ -1,18 +1,13 @@
-import AppRouter from './pages/routes'
-
-
-import './App.css'
-import Home from './components/Home'
+import React from "react";
+import AppRouter from "./pages/routes";
+import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
- 
-
   return (
-    <>
-     
-      <AppRouter/>
-    </>
-  )
+    <AuthProvider>
+      <AppRouter />
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
