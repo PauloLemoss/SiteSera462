@@ -17,7 +17,9 @@ import {
 } from '@heroicons/react/24/outline';
 import ThemeToggle from './ThemeToggle';
 import UserInfoBar from './UserInfoBar';
+import DynamicNavigationMenu from './DynamicNavigationMenu';
 import { useAuth } from '../contexts/AuthContext';
+import { useUserRole } from '../hooks/useUserRole';
 
 const navigation = [
   { name: 'Início', href: '/', icon: HomeIcon },
@@ -36,18 +38,21 @@ const adminNavigation = [
   { name: 'Cadastro Instituição', href: '/tenant', icon: BuildingOfficeIcon },
   { name: 'Cadastro Usuário', href: '/user', icon: UserCircleIcon },
   { name: 'Cadastro Matéria', href: '/mataria', icon: AcademicCapIcon },
+  { name: 'Menu Demo', href: '/dynamic-menu-demo', icon: ChartBarIcon },
 ];
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-const Layout = () => {
+const EnhancedLayout: React.FC = () => {
   const location = useLocation();
   const [isAdminMenuOpen, setIsAdminMenuOpen] = useState(false);
+  const [isRoleMenuOpen, setIsRoleMenuOpen] = useState(false);
   const { isAuthenticated, isLoading } = useAuth();
+  const { role, displayName, isValid } = useUserRole();
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path: string) => location.pathname === path;
 
   // Show loading spinner while checking authentication
   if (isLoading) {
@@ -95,14 +100,59 @@ const Layout = () => {
                     </Link>
                   ))}
                   
-                  {/* Admin Menu Dropdown or Login Link */}
-                  {isAuthenticated ? (
+                  {/* Role-based Menu for Authenticated Users */}
+                  {isAuthenticated && isValid && (
+                    <div className="relative">
+                      <button
+                        onClick={() => setIsRoleMenuOpen(!isRoleMenuOpen)}
+                        className="nav-link flex items-center"
+                      >
+                        <UserCircleIcon className="w-4 h-4 mr-2" />
+                        {displayName}
+                        <svg
+                          className={`ml-1 w-4 h-4 transition-transform duration-200 ${
+                            isRoleMenuOpen ? 'rotate-180' : ''
+                          }`}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+
+                      <Transition
+                        show={isRoleMenuOpen}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                      >
+                        <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-medium border border-gray-200 dark:border-gray-700 z-50">
+                          <div className="py-1">
+                            <DynamicNavigationMenu
+                              userRole={role}
+                              variant="vertical"
+                              showIcons={true}
+                              showDescriptions={false}
+                              className="w-full"
+                            />
+                          </div>
+                        </div>
+                      </Transition>
+                    </div>
+                  )}
+
+                  {/* Admin Menu Dropdown for Admin Users */}
+                  {isAuthenticated && (role === 'Admin' || role === 'Administrator') && (
                     <div className="relative">
                       <button
                         onClick={() => setIsAdminMenuOpen(!isAdminMenuOpen)}
                         className="nav-link flex items-center"
                       >
-                        <UserCircleIcon className="w-4 h-4 mr-2" />
+                        <ChartBarIcon className="w-4 h-4 mr-2" />
                         Administração
                         <svg
                           className={`ml-1 w-4 h-4 transition-transform duration-200 ${
@@ -147,7 +197,10 @@ const Layout = () => {
                         </div>
                       </Transition>
                     </div>
-                  ) : (
+                  )}
+
+                  {/* Login Link for Non-authenticated Users */}
+                  {!isAuthenticated && (
                     <Link
                       to="/login"
                       className="nav-link flex items-center"
@@ -197,8 +250,24 @@ const Layout = () => {
                   </Disclosure.Button>
                 ))}
                 
-                {/* Mobile Admin Menu or Login */}
-                {isAuthenticated ? (
+                {/* Mobile Role-based Menu */}
+                {isAuthenticated && isValid && (
+                  <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      {displayName}
+                    </div>
+                    <DynamicNavigationMenu
+                      userRole={role}
+                      variant="vertical"
+                      showIcons={true}
+                      showDescriptions={false}
+                      className="px-2"
+                    />
+                  </div>
+                )}
+
+                {/* Mobile Admin Menu */}
+                {isAuthenticated && (role === 'Admin' || role === 'Administrator') && (
                   <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
                     <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Administração
@@ -220,7 +289,10 @@ const Layout = () => {
                       </Disclosure.Button>
                     ))}
                   </div>
-                ) : (
+                )}
+
+                {/* Mobile Login */}
+                {!isAuthenticated && (
                   <Disclosure.Button
                     as={Link}
                     to="/login"
@@ -298,4 +370,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default EnhancedLayout;

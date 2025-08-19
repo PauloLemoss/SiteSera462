@@ -16,6 +16,7 @@ import Mataria from "./Mataria";
 import Login from "./Login";
 import VideoDemo from "./VideoDemo";
 import Dashboard from "./Dashboard";
+import DynamicMenuDemo from "./DynamicMenuDemo";
 
 const AppRouter = () => (
   <Routes>
@@ -30,6 +31,7 @@ const AppRouter = () => (
       <Route path="/areadeacesso" element={<AreadeAcesso />} />
       <Route path="/video-demo" element={<VideoDemo />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/dynamic-menu-demo" element={<DynamicMenuDemo />} />
       
       {/* Cadastro de Aluno */}
       <Route
